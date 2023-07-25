@@ -1,0 +1,30 @@
+<mat-progress-bar *ngIf="loading | async" mode="indeterminate"></mat-progress-bar>
+
+<div class="container  justify-content-center align-items-center py-5">
+    <div class="row d-flex justify-content-between align-items-center w-100">
+        <header class="fs-2 w-25">Users List</header>
+        <mat-form-field class="w-25" appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Type here...." (input)="onSearch($event)">
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <div class="col-2 my-3" *ngFor="let user of filteredUsers">
+            <mat-card (click)="showUserDetails(user)">
+                <img mat-card-image [src]="user.avatar" alt="Photo of {{ user.first_name }} {{ user.last_name }}" height="200" >
+                <mat-card-content class="d-flex justify-content-center align-items-center p-3 flex-column">
+                    <mat-card-title>{{ user.first_name }} {{ user.last_name }}</mat-card-title>
+                    <p>{{user.email}}</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row py-5 d-flex align-items-center justify-content-between">
+        <div class="w-25"><p>{{paginator.getNumberOfPages()}} pages</p></div>
+        <div class="w-50">
+            <mat-paginator [length]="totalCount" #paginator [pageSize]="pageSize" [pageSizeOptions]="[6]"
+                [pageIndex]="pageNumber" aria-label="Select page" (page)="handlePageEvent($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>
